@@ -1,0 +1,44 @@
+body {
+    background-image: url("../img/bg.jpg");
+    background-size:  cover;
+    background-color: #cccccc;
+}
+
+.container{
+	max-width: 960px;
+	padding: 24px;
+	margin-top:24px;
+	margin-bottom:24px;
+	background-color: #ffffff;
+	border:1px solid silver;
+}
+
+.segment{
+	max-width: 960px;
+}
+
+.title{
+	margin-top: 42px;
+	margin-bottom: 42px;
+}
+
+h4,p,li{
+	color: #000000;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+.pre-style{
+	margin-bottom:15px;
+	font-size:21px;
+	font-weight:200
+	color: #000000;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+label{
+	padding-right: 2px;
+}
+
+input,option,button{
+	font-family: 'Source Sans Pro', sans-serif;
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head lang="en">
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	    <title>Search Recipes</title>
+
+	    <link href="css/bootstrap.min.css" rel="stylesheet">
+	    <link href="css/search-custom.css" rel="stylesheet">
+
+	    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200" rel="stylesheet">
+	</head>
+	<body>
+
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	    <!-- Include all compiled plugins (below), or include individual files as needed -->
+	    <script src="js/bootstrap.min.js"></script>
+
+	    <nav class="navbar navbar-default">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <a href="create.html">
+		        <button type="button" class="btn btn-primary navbar-btn">Create Recipe</button>
+		      <a>
+		    </div>
+		  </div>
+		</nav>
+	    
+	    <h1 class="text-center title">What you are eating tonight starts here.</h1>
+	    
+	    <div class="container">
+			<form>
+				<div class="form-check">
+					<label class="bold">Limit to:</label> 
+					<label class="form-check-label">
+				      <input type="checkbox" class="form-check-input" name="vegan">
+				      Vegan
+				    </label>
+				    <label class="form-check-label">
+				      <input type="checkbox" class="form-check-input" name="kosher">
+				      Kosher
+				    </label>
+				    <label class="form-check-label">
+				      <input type="checkbox" class="form-check-input" name="halaal">
+				      Halaal
+				    </label>
+				    <label class="form-check-label">
+				      <input type="checkbox" class="form-check-input" name="dairy_free">
+				      Dairy Free
+				    </label>
+				    <label class="form-check-label">
+				      <input type="checkbox" class="form-check-input" name="gluten_free">
+				      Gluten Free
+				    </label>
+				</div>
+				
+				<div class="form-group col-md-6 connect">
+				    <input class="form-control" type="search" name="keyword" placeholder="Keyword search here...">
+				</div>
+				<div class="form-group col-md-3 connect">
+					<select class="form-control" name="meal_type"> 
+					<option value="breakfast">Breakfast</option>
+					<option value="lunch">Lunch</option>
+					<option value="dinner">Dinner</option>
+					<option value="dessert">Dessert</option>
+					<option value="appetizer">Appetizer</option>
+					<option value="other">Other</option>
+					</select>
+				</div>
+				<div class="form-group col-md-2 connect">
+					<select class="form-control" name="time"> 
+					<option value="30min">30 min</option>
+					<option value="45min">45 min</option>
+					<option value="60min">60 min</option>
+					<option value="90min">90 min</option>
+					<option value-"other">Other</option>
+					</select>
+				</div>
+				<button type="submit" class="btn btn-primary col-md-1 bump" value="Search">Search</button>
+			<form> 
+		</div>
+	</body>
+</html>

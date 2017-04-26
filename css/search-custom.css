@@ -1,0 +1,46 @@
+body {
+    background-image: url("../img/bg.jpg");
+    background-size:  cover;
+    background-color: #cccccc;
+}
+
+.container{
+	max-width: 960px;
+}
+
+.title{
+	margin-top: 180px;
+	margin-bottom: 42px;
+}
+
+h1, label{
+	color: #ffffff;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+input,option,button{
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+.btn{
+	background-color: #1FC410;
+	border-color: #1FC410;
+}
+
+.btn.focus,.btn:focus,.btn:hover{
+	background-color: #3FA34D;
+	border-color: #3FA34D;
+}
+.connect{
+	padding:2px;
+}
+
+.bump{
+	margin-top: 2px;
+}
+
+.navbar {
+   background-color: transparent;
+   background: transparent;
+   border-color: transparent;
+}
