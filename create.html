@@ -46,7 +46,7 @@
 	        </nav>
 
 	    	<h3 class="text-center title">Create your recipe.</h3>
-	    	<form>
+	    	<form action="add_recipe.php" method="post">
 			<div class="form-group shift">
 				<label >Title of Recipe:</label> 
 				<input type="text" name="title" maxlength="100" class="form-control">
@@ -131,11 +131,21 @@
 
 			<script>
 				// NOTE TO GRADER THIS CODE WILL BE PROFESSIONALIZED AND INVOLVED WHEN THE OTHER JAVASCRIPT IS ADDED TO INCLUDE AUTO COMPLETE
+				var data = {};
+
 				$("#add_ingredient").on('click', function(e) {
 					event.preventDefault();
 					console.log=("clicked");
 				    $( ".list" ).append("<p class=\"bump\" style=\"color: #000000;\">" + document.getElementById("ingredient_name").value + " " + document.getElementById("ingredient_amt").value + " " + document.getElementById("ingredient_type").value + "</p>");
-				    $('#ingredient_name').val('');
+				   
+					// add ingredient information to data array
+					data['ingredient_name'] = $("#ingredient_name").val('');
+					data['ingredient_amt'] = $("#ingredient_amt").val('');
+					data['ingredient_type'] = $("#ingredient_type").val('');
+
+					$("#results").load("add_recipe.php", data);
+
+					$('#ingredient_name').val('');
 				    $('#ingredient_amt').val('');
 				})
 			</script>
