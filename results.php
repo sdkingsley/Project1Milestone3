@@ -22,8 +22,8 @@
         <nav class="navbar navbar-default">
           <div class="container-fluid">
             <div class="navbar-header">
-              <a class="navbar-brand" href="#">
-                <p><img  src="img/back.svg" style="width: 16px; margin-right:4px;"><small class="text-muted">Back to Search</small></p>
+              <a class="navbar-brand" href="search.html">
+                <p><img src="img/back.svg" style="width: 16px; margin-right:4px;"><small class="text-muted">Back to Search</small></p>
               </a>
             </div>
           </div>
@@ -94,7 +94,6 @@ else
 
 //echo $sql;
 if ($result = mysqli_query($conn, $sql)) {
-        $row = mysqli_fetch_row($result);
         while ($row = mysqli_fetch_row($result)) {
 	if(!strcmp($row[3],'NULL'))
 		$row[3] = 'http://images.meredith.com/recipecom/images/home/recipeBG2740x920.jpg.pagespeed.ce.xBgItY8Iod.jpg';

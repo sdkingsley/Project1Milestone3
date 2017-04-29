@@ -73,6 +73,8 @@
                 <li class="list-group-item" name="sugar"><small class="text-muted"><label>Sugar:</label>xxx g</small></li>
                 <li class="list-group-item" name="carbs"><small class="text-muted"><label>Carbohydrates:</label>xxx g</small></li>
               </ul>
+
+	       
             </div>
           </div>
           <div class="embed-responsive embed-responsive-16by9">
