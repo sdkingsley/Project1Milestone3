@@ -32,27 +32,27 @@
 	    <h1 class="text-center title">What you are eating tonight starts here.</h1>
 	    
 	    <div class="container">
-			<form>
+			<form action = 'results.php' method = 'post'>
 				<div class="form-check">
 					<label class="bold">Limit to:</label> 
 					<label class="form-check-label">
-				      <input type="checkbox" class="form-check-input" name="vegan">
+				      <input type="checkbox" class="form-check-input" id="vegan" name="vegan">
 				      Vegan
 				    </label>
 				    <label class="form-check-label">
-				      <input type="checkbox" class="form-check-input" name="kosher">
+				      <input type="checkbox" class="form-check-input" id="kosher" name="kosher">
 				      Kosher
 				    </label>
-				    <label class="form-check-label">
-				      <input type="checkbox" class="form-check-input" name="halaal">
+				    <!--<label class="form-check-label">
+				      <input type="checkbox" class="form-check-input" id="halaal" name="halaal">
 				      Halaal
-				    </label>
+				    </label>-->
 				    <label class="form-check-label">
-				      <input type="checkbox" class="form-check-input" name="dairy_free">
+				      <input type="checkbox" class="form-check-input" id="dairy_free" name="dairy_free">
 				      Dairy Free
 				    </label>
 				    <label class="form-check-label">
-				      <input type="checkbox" class="form-check-input" name="gluten_free">
+				      <input type="checkbox" class="form-check-input" id="gluten_free" name="gluten_free">
 				      Gluten Free
 				    </label>
 				</div>
@@ -62,25 +62,25 @@
 				</div>
 				<div class="form-group col-md-3 connect">
 					<select class="form-control" name="meal_type"> 
-					<option value="breakfast">Breakfast</option>
-					<option value="lunch">Lunch</option>
-					<option value="dinner">Dinner</option>
-					<option value="dessert">Dessert</option>
-					<option value="appetizer">Appetizer</option>
-					<option value="other">Other</option>
+					<option value="Breakfast">Breakfast</option>
+					<option value="Lunch">Lunch</option>
+					<option value="Dinner">Dinner</option>
+					<option value="Dessert">Dessert</option>
+					<option value="Appetizer">Appetizer</option>
+					<option value="any">Any</option>
 					</select>
 				</div>
 				<div class="form-group col-md-2 connect">
 					<select class="form-control" name="time"> 
-					<option value="30min">30 min</option>
-					<option value="45min">45 min</option>
-					<option value="60min">60 min</option>
-					<option value="90min">90 min</option>
-					<option value-"other">Other</option>
+					<option value="00:30:00">30 min</option>
+					<option value="00:45:00">45 min</option>
+					<option value="01:00:00">60 min</option>
+					<option value="01:30:00">90 min</option>
+					<option value-"any">Any</option>
 					</select>
 				</div>
-				<button type="submit" class="btn btn-primary col-md-1 bump" value="Search">Search</button>
-			<form> 
+				<button id='search' type="submit" class="btn btn-primary col-md-1 bump" value="Search">Search</button>
+			<form>
 		</div>
 	</body>
 </html>

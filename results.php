@@ -28,16 +28,29 @@
             </div>
           </div>
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-$keywords = $_POST['kws'];
-$limits = json_decode($_POST(['lim']), TRUE);
-$type = $_POST['type'];
+$keywords = $_POST['keyword'];
+$limits = array();
+$type = $_POST['meal_type'];
 $time = $_POST['time'];
 
-echo '<p name="time" style="padding-left:24px;"><small class="text-muted">7 results for search "' . $keywords . '"</small></p></nav>';
+if(isset($_POST['vegan']))
+	$limits[] = 'vegan';
+if(isset($_POST['kosher']))
+	$limits[] = 'kosher';
+if(isset($_POST['dairy_free']))
+	$limits[] = 'dairy_free';
+if(isset($_POST['gluten_free']))
+	$limits[] = 'gluten_free';
 
-error_reporting(-1);
-ini_set('display_errors', 'On');
+if(!strcmp($type,'any'))
+	$type = NULL;
+if(!strcmp($time,'Any'))
+	$time = NULL;
+
+echo '<p name="time" style="padding-left:24px;"><small class="text-muted">Results for search "' . $keywords . '"</small></p></nav>';
 
 $user = "jazarwil";
 $pass = "wUW9uBe5";
@@ -55,18 +68,31 @@ $cond = '';
 
 for($i=0; $i<count($limits); $i++) {
 if($i != 0)
-	$cond .= 'AND ';
-$cond .= $limits[$i] . '= 1 ';
+	$cond .= ' AND ';
+$cond .= $limits[$i] . '= 1';
 }
+
+$condtt = '';
+if($type && $time)
+	$condtt = 'meal_type = ' . $type . ' AND time = ' . $time;   
+else if($type)
+	$condtt = 'meal_type = ' . $type;
+else if($time)
+	$condtt = 'time = ' . $time;
+
 
 $sql = '';
 
-if($cond)
-	$sql = "SELECT * FROM (SELECT * FROM (SELECT T2.R_ID FROM (SELECT T1.R_ID, COUNT(*) AS total FROM (SELECT Ingredient.*,R_I_jtable.R_ID FROM (Ingredient JOIN R_I_jtable ON Ingredient.I_ID = R_I_jtable.I_ID)) AS T1 WHERE $cond GROUP BY T1.R_ID) AS T2, (SELECT R_ID, count(*) AS total FROM R_I_jtable GROUP BY R_ID) AS T3 WHERE T2.total=T3.total AND T2.R_ID = T3.R_ID) AS T4 NATURAL JOIN Recipe) AS T5 ORDER BY levenshtein_ratio(T5.Name, '$keywords') DESC"; 
-else 
-	$sql = "SELECT * FROM Recipe ORDER BY levenshtein_ratio(T5.Name, '$keywords') DESC";
+if($cond && $condtt)
+	$sql = "SELECT * FROM Recipe WHERE $cond AND $condtt ORDER BY levenshtein_ratio(Name, '$keywords') DESC"; 
+else if($cond)
+	$sql = "SELECT * FROM Recipe WHERE $cond ORDER BY levenshtein_ratio(Name, '$keywords') DESC";
+else if($condtt)
+	$sql = "SELECT * FROM Recipe WHERE $condtt ORDER BY levenshtein_ratio(Name, '$keywords') DESC";
+else	
+	$sql = "SELECT * FROM Recipe ORDER BY levenshtein_ratio(Name, '$keywords') DESC";
 
-
+//echo $sql;
 if ($result = mysqli_query($conn, $sql)) {
         $row = mysqli_fetch_row($result);
         while ($row = mysqli_fetch_row($result)) {
@@ -92,6 +118,10 @@ if ($result = mysqli_query($conn, $sql)) {
           </div>
         </div>';
 	}
+}
+else
+{
+	echo '<h2>No results.</h2>';
 }
 ?>
 
