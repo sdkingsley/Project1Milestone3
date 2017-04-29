@@ -27,13 +27,15 @@
               </a>
             </div>
           </div>
-          <p name="time" style="padding-left:24px;"><small class="text-muted">7 results for search "Gluten Free Dinner"</small></p>
-        </nav>
 <?php
 
-if( !isset($_GET['r_id']) ) { echo 'No parameter recieved!'; return; }
+$keywords = $_POST['kws'];
+$limits = json_decode($_POST(['lim']), TRUE);
+$type = $_POST['type'];
+$time = $_POST['time'];
 
-$r_id = $_GET['r_id'];
+echo '<p name="time" style="padding-left:24px;"><small class="text-muted">7 results for search "' . $keywords . '"</small></p></nav>';
+
 error_reporting(-1);
 ini_set('display_errors', 'On');
 
@@ -48,7 +50,23 @@ $conn = mysqli_connect($servername, $user, $pass, $dbname);
 if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
 }
-$sql = "SELECT * FROM Recipe WHERE R_ID = " . $r_id;
+
+$cond = '';
+
+for($i=0; $i<count($limits); $i++) {
+if($i != 0)
+	$cond .= 'AND ';
+$cond .= $limits[$i] . '= 1 ';
+}
+
+$sql = '';
+
+if($cond)
+	$sql = "SELECT * FROM (SELECT * FROM (SELECT T2.R_ID FROM (SELECT T1.R_ID, COUNT(*) AS total FROM (SELECT Ingredient.*,R_I_jtable.R_ID FROM (Ingredient JOIN R_I_jtable ON Ingredient.I_ID = R_I_jtable.I_ID)) AS T1 WHERE $cond GROUP BY T1.R_ID) AS T2, (SELECT R_ID, count(*) AS total FROM R_I_jtable GROUP BY R_ID) AS T3 WHERE T2.total=T3.total AND T2.R_ID = T3.R_ID) AS T4 NATURAL JOIN Recipe) AS T5 ORDER BY levenshtein_ratio(T5.Name, '$keywords') DESC"; 
+else 
+	$sql = "SELECT * FROM Recipe ORDER BY levenshtein_ratio(T5.Name, '$keywords') DESC";
+
+
 if ($result = mysqli_query($conn, $sql)) {
         $row = mysqli_fetch_row($result);
         while ($row = mysqli_fetch_row($result)) {
@@ -63,16 +81,16 @@ if ($result = mysqli_query($conn, $sql)) {
             <div class="card-block">
               <h4 class="card-title" name="name">' . $row[1] . '</h4>
               <p class="card-text" name="time"><small class="text-muted">' . $row[6] . '</small></p>
-              <p class="card-text" name="descr">is porttitor convallis neque, vel consequat augue rhoncus id. Cras sed dui est. Cras ut pharetra elit, vitae semper nulla. Nam luctus scelerisque nisl non ullamcorper. Pellentesque rutrum sit amet magna in feugiat. Sed cursus leo vitae dolor commodo, non cursus ligula finibus. Sed vitae nulla nisl.</p>
+              <p class="card-text" name="descr">' . $row[2] . '</p>
               <ul class="list-group list-group-flush">
-                <li class="list-group-item" name="calories"><small class="text-muted"><label>Calories:</label>xxx cal</small></li>
-                <li class="list-group-item" name="fat"><small class="text-muted"><label>Fat:</label>xxx g</small></li>
-                <li class="list-group-item" name="protien"><small class="text-muted"><label>Protien:</label>xxx g</small></li>
+                <li class="list-group-item" name="calories"><small class="text-muted"><label>Calories:</label>' . $row[12] . '</small></li>
+                <li class="list-group-item" name="fat"><small class="text-muted"><label>Fat:</label>' . $row[13] . ' g</small></li>
+                <li class="list-group-item" name="protein"><small class="text-muted"><label>Protein:</label>' . $row[19] . '</small></li>
               </ul>
               <a href="#" class="btn btn-primary">View Recipe</a>
             </div>
           </div>
-        </div>'
+        </div>';
 	}
 }
 ?>
