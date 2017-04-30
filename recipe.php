@@ -28,9 +28,28 @@
             </div>
           </div>
         </nav>
+<?php 
 
-        <!-- GENERATE THIS CARD FOR EACH RESULT -->
-        <div class="col-sm-12">
+if( !isset($_GET['R_ID']) ) { echo 'No parameter recieved!'; return; }
+              
+error_reporting(-1);
+ini_set('display_errors', 'On');
+            
+$user = "jazarwil";
+$pass = "wUW9uBe5";
+$servername = "localhost";
+$dbname = "jazarwil";
+        
+// Create connection
+$conn = mysqli_connect($servername, $user, $pass, $dbname);
+// Check connection
+if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+}             
+$sql = "SELECT * FROM Recipe WHERE R_ID = " . $_GET['R_ID'];
+if ($result = mysqli_query($conn, $sql)) {
+        while ($row = mysqli_fetch_row($result)) {
+        echo '<div class="col-sm-12">
           <div class="card">
             <img class="card-img-top" src="https://images.unsplash.com/photo-1453831362806-3d5577f014a4?ixlib=rb-0.3.5&q=100&fm=jpg&crop=entropy&cs=tinysrgb&s=355e84e23d5a08b98698e3d750682dbf" style="width: 100%;"alt="recipe picture" name="img_url">
             <div class="card-block">
@@ -61,7 +80,9 @@
                 10. Nam finibus odio at nisi consequat, at volutpat quam facilisis.
                 </span>
               </pre>
+	      <pre>
 
+	      </pre>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item" name="servings"><small class="text-muted"><label>Servings:</label>xxx cal</small></li>
                 <li class="list-group-item" name="calories"><small class="text-muted"><label>Calories:</label>xxx cal</small></li>
@@ -80,9 +101,10 @@
           <div class="embed-responsive embed-responsive-16by9">
               <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/2x0ie9aWIHU"></iframe>
           </div>
-        </div>
-        <!-- GENERATE IT HERE -->
-
+        </div>';
+	}
+}
+?>
 
       </div>
   </body>

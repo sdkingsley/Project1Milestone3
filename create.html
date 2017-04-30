@@ -46,20 +46,20 @@
 	        </nav>
 
 	    	<h3 class="text-center title">Create your recipe.</h3>
-	    	<form action="add_recipe.php" method="post">
+	    	<form id="f1" action="add_recipe.php" method="post">
 			<div class="form-group shift">
 				<label >Title of Recipe:</label> 
 				<input type="text" name="title" maxlength="100" class="form-control">
 			</div>
 			<div class="form-group shift ">
 				<select class="form-control" name="time">
-				<option value="10min">10 min</option>
-				<option value="20min">20 min</option> 
-				<option value="30min">30 min</option>
-				<option value="45min">45 min</option>
-				<option value="60min">60 min</option>
-				<option value="90min">90 min</option>
-				<option value="other">Other</option>
+				<option value="00:10:00">10 min</option>
+				<option value="00:20:00">20 min</option> 
+				<option value="00:30:00">30 min</option>
+				<option value="00:45:00">45 min</option>
+				<option value="01:00:00">60 min</option>
+				<option value="01:30:00">90 min</option>
+				<option selected="selected" value="other">Time - Other</option>
 				</select>
 			</div>
 			<div class="form-group shift">
@@ -69,7 +69,7 @@
 				<option value="Dinner">Dinner</option>
 				<option value="Dessert">Dessert</option>
 				<option value="Appetizer">Appetizer</option>
-				<option value="other">Other</option>
+				<option selected="selected" value="other">Meal Type - Other</option>
 				</select>
 			</div>
 
@@ -88,6 +88,16 @@
 				<textarea class="form-control" id="exampleTextarea" rows="3" name="steps" maxlength="2000"></textarea>	
 			</div>
 
+			<div class="form-group shift">			
+				<label>Image URL:</label>
+				<textarea class="form-control" id="exampleTextarea" rows="1" name="image" maxlength="2000"></textarea>	
+			</div>
+
+			<div class="form-group shift">			
+				<label>Video URL:</label>
+				<textarea class="form-control" id="exampleTextarea" rows="1" name="video" maxlength="2000"></textarea>	
+			</div>
+
 			<div class="segment">
 			 
 			<div class="form-group shift col-md-4">
@@ -102,7 +112,7 @@
 
 			<div class="form-group col-md-3">
 				<label style="">Measurement: </label>
-					<select id="ingredient_type" class="form-control" name="measurement_type"> 
+					<select id="ingredient_measure" class="form-control" name="measure"> 
 						<option value="cup">cup</option>
 						<option value="tsp">tsp.</option>
 						<option value="tbsp">tbsp.</option>
@@ -130,38 +140,44 @@
 			</div>
 
 			<script>
-				// NOTE TO GRADER THIS CODE WILL BE PROFESSIONALIZED AND INVOLVED WHEN THE OTHER JAVASCRIPT IS ADDED TO INCLUDE AUTO COMPLETE
-				var data = {};
+				var datat = [];
 
 				$("#add_ingredient").on('click', function(e) {
 					event.preventDefault();
 					console.log=("clicked");
-				    $( ".list" ).append("<p class=\"bump\" style=\"color: #000000;\">" + document.getElementById("ingredient_name").value + " " + document.getElementById("ingredient_amt").value + " " + document.getElementById("ingredient_type").value + "</p>");
+				    $( ".list" ).append("<p class=\"bump\" style=\"color: #000000;\">" + document.getElementById("ingredient_name").value + " " + document.getElementById("ingredient_amt").value + " " + document.getElementById("ingredient_measure").value + "</p>");
 				   
 					// add ingredient information to data array
-					data['ingredient_name'] = $("#ingredient_name").val('');
-					data['ingredient_amt'] = $("#ingredient_amt").val('');
-					data['ingredient_type'] = $("#ingredient_type").val('');
-
-					$("#results").load("add_recipe.php", data);
+					datat.push([$("#ingredient_name").val(),$("#ingredient_amt").val(),$("#ingredient_measure").val()]);
 
 					$('#ingredient_name').val('');
-				    $('#ingredient_amt').val('');
-				})
+				    	$('#ingredient_amt').val('');
+				});
+
+				$('#f1').submit(function(event){
+					jQuery.ajax({
+						type: "POST",
+						url: 'ingredient_sub.php',
+						data: {datat},
+						complete: function (response) {
+							console.debug("returns");
+						}
+				 	});
+				});
 			</script>
 			
 		</div>
 			<p class="list" style="color: #ffffff;">PLACEHOLDER</p>
 
-			<label class="btn  btn-primary bump">
+			<!--label class="btn  btn-primary bump">
 	           Upload Picture <input type="file" id="files_image" accept="image/*" name="files_image[]" style="display: none;">
 	    	</label>
 
 	    	<label class="btn  btn-primary">
 	           Upload Video <input type="file" id="files_video" accept="video/*" name="files_video[]" style="display: none;">
-	    	</label>
+	    	</label>-->
 
-			<button type="submit" class="btn btn-primary col-md-12" style="margin-top: 36px;">Create</button>
+			<button type="submit" class="btn btn-primary col-md-12" style="margin-top: 20px;">Create</button>
 		</form>
 	    </div>
 	</body>
