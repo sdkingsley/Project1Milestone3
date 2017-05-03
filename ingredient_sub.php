@@ -47,9 +47,9 @@ for($i = 0; $i< count($data); $i++) {
 	//get conversion factor if applicable, so that nutritional information scales to ingredient amounts
 	$cf = $conn->query("SELECT cfactor FROM UnitConversion WHERE meas1 = '" . $data[$i][2] . "' AND meas2 = '" . $row['uom'] . "'");	
 	if(!$cf->num_rows)
-		$cf = 1;
+		$cf = $data[$i][1];
 	else
-		$cf = $cf->fetch_array(MYSQLI_NUM)[0];
+		$cf = $cf->fetch_array(MYSQLI_NUM)[0] * $data[$i][1];
 	
 	$i_id = $row['I_ID'];		
 	$cal += $row['calories']*$cf;
@@ -76,7 +76,7 @@ $sql = "UPDATE Recipe SET calories = $cal, fat = $fat, cholesterol = $chol, sodi
 $result = $conn->query($sql);
 
 if ($result === TRUE) {
-    echo "Success";
+    echo "success";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 } 

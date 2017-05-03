@@ -95,7 +95,7 @@
 			</div>
 
 			<div class="form-group shift">			
-				<label>Video URL:</label>
+				<label>Video URL (youtube embed links only):</label>
 				<textarea class="form-control" id="exampleTextarea" rows="1" name="video" maxlength="2000"></textarea>	
 			</div>
 
@@ -126,6 +126,7 @@
 						<option value="L">L</option>
 						<option value="dL">dL</option>
 						<option value="pound">pound</option>
+						<option value="ounce">ounce</option>
 						<option value="mg">mg</option>
 						<option value="g">g</option>
 						<option value="kg">kg</option>
@@ -144,8 +145,7 @@
 				var datat = [];
 
 				$("#add_ingredient").on('click', function(e) {
-					event.preventDefault();
-					console.log=("clicked");
+				    event.preventDefault();
 				    $( ".list" ).append("<p class=\"bump\" style=\"color: #000000;\">" + document.getElementById("ingredient_name").value + " " + document.getElementById("ingredient_amt").value + " " + document.getElementById("ingredient_measure").value + "</p>");
 				   
 					// add ingredient information to data array
@@ -156,23 +156,33 @@
 				});
 
 				$('#f1').submit(function(event){
-					console.debug("here");
 					event.preventDefault();
 					jQuery.ajax({
 						url:'add_recipe.php',
 						type:'POST',
 						data:$('#f1').serialize(),
 						complete:function(response){
-							if(isNumeric(response.responseText)) //make sure write was successful
+							if(isNumeric(response.responseText)) { //make sure recipe write was successful
 								jQuery.ajax({
 									type: "POST",
 									url: 'ingredient_sub.php',
 									data: {R_ID: response.responseText, ing: datat},
-									complete: function (response) {
-										console.debug(response.responseText);
-										window.location.replace("success.html");
+									complete: function (response1) {
+										if(response1.responseText !== "success") { //if ingred write was unsuccessful 
+											jQuery.ajax({
+												type: "POST",
+												url: 'undo_recipe.php',
+												data: {R_ID: response.responseText}
+											});
+											window.location.replace("failure.html");
+										}
+										else
+											window.location.replace("success.html");
 									}
 								});
+							}
+							else
+								window.location.replace("failure.html");
 						}
 					});	
 				});

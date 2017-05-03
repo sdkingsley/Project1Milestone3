@@ -108,9 +108,9 @@ if ($result = mysqli_query($conn, $sql)) {
               <p class="card-text" name="time"><small class="text-muted">' . $row[6] . '</small></p>
               <p class="card-text" name="descr">' . $row[2] . '</p>
               <ul class="list-group list-group-flush">
-                <li class="list-group-item" name="calories"><small class="text-muted"><label>Calories:</label>' . $row[12] . '</small></li>
-                <li class="list-group-item" name="fat"><small class="text-muted"><label>Fat:</label>' . $row[13] . ' g</small></li>
-                <li class="list-group-item" name="protein"><small class="text-muted"><label>Protein:</label>' . $row[19] . '</small></li>
+                <li class="list-group-item" name="calories"><small class="text-muted"><label>Calories:</label> ' . $row[12] . '</small></li>
+                <li class="list-group-item" name="fat"><small class="text-muted"><label>Fat:</label> ' . $row[13] . 'g</small></li>
+                <li class="list-group-item" name="protein"><small class="text-muted"><label>Protein:</label> ' . $row[19] . 'g</small></li>
               </ul>
               <a href="#" class="btn btn-primary">View Recipe</a>
             </div>
