@@ -34,24 +34,21 @@ $video = $_POST['video'];
 $sql = "INSERT INTO Recipe (R_ID, name, descr, img_url, steps, servings, time, meal_type) values (NULL, '$title', '$description', '$image', '$steps', '$servings', '$time', '$meal');";
 
 $result = $conn->query($sql);
-
-if ($result === TRUE) {
-    echo "Recipe inserted successfully.<br>";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+$rid = $conn->insert_id;
+if ($result !== TRUE) {
+    die("Error: " . $sql . "<br>" . $conn->error);
 } 
 if($video){
-$sql = "INSERT INTO PrepVideo values (" . $conn->insert_id . ", '$video');";
+$sql = "INSERT INTO PrepVideo values (" . $rid . ", '$video');";
 
 $result = $conn->query($sql);
 
-if ($result === TRUE) {
-    echo "Prep Video inserted successfully.";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+if ($result !== TRUE) {
+    //die("Error: " . $sql . "<br>" . $conn->error);
 }
 }
-echo "Submission successful - redirecting"; 
-header('Location: '. 'success.html');
+
+echo $rid;
+
 mysqli_close($conn);
 ?>

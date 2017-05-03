@@ -16,6 +16,7 @@
 		<script>
 			$(function(){
 				$("#ingredient_name").autocomplete({
+					minLength: 2,
 					source: function(request,callback){
 					 	jQuery.ajax({
 						    type: "POST",
@@ -155,15 +156,30 @@
 				});
 
 				$('#f1').submit(function(event){
+					console.debug("here");
+					event.preventDefault();
 					jQuery.ajax({
-						type: "POST",
-						url: 'ingredient_sub.php',
-						data: {datat},
-						complete: function (response) {
-							console.debug("returns");
+						url:'add_recipe.php',
+						type:'POST',
+						data:$('#f1').serialize(),
+						complete:function(response){
+							if(isNumeric(response.responseText)) //make sure write was successful
+								jQuery.ajax({
+									type: "POST",
+									url: 'ingredient_sub.php',
+									data: {R_ID: response.responseText, ing: datat},
+									complete: function (response) {
+										console.debug(response.responseText);
+										window.location.replace("success.html");
+									}
+								});
 						}
-				 	});
+					});	
 				});
+
+				function isNumeric(n) {
+				  return !isNaN(parseFloat(n)) && isFinite(n);
+				}
 			</script>
 			
 		</div>

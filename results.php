@@ -84,13 +84,13 @@ else if($time)
 $sql = '';
 
 if($cond && $condtt)
-	$sql = "SELECT * FROM Recipe WHERE $cond AND $condtt ORDER BY levenshtein_ratio(Name, '$keywords') DESC"; 
+	$sql = "SELECT * FROM Recipe WHERE $cond AND $condtt ORDER BY levenshtein_ratio(name, '$keywords') DESC"; 
 else if($cond)
-	$sql = "SELECT * FROM Recipe WHERE $cond ORDER BY levenshtein_ratio(Name, '$keywords') DESC";
+	$sql = "SELECT * FROM Recipe WHERE $cond ORDER BY levenshtein_ratio(name, '$keywords') DESC";
 else if($condtt)
-	$sql = "SELECT * FROM Recipe WHERE $condtt ORDER BY levenshtein_ratio(Name, '$keywords') DESC";
+	$sql = "SELECT * FROM Recipe WHERE $condtt ORDER BY levenshtein_ratio(name, '$keywords') DESC";
 else	
-	$sql = "SELECT * FROM Recipe ORDER BY levenshtein_ratio(Name, '$keywords') DESC";
+	$sql = "SELECT * FROM Recipe ORDER BY levenshtein_ratio(name, '$keywords') DESC";
 
 //echo $sql;
 if ($result = mysqli_query($conn, $sql)) {
