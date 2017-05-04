@@ -14,12 +14,12 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$title = $conn->real_escape_string($_POST['title']);
+$title = $conn->real_escape_string(htmlspecialchars($_POST['title']));
 $time = $_POST['time'];
 $meal = $_POST['meal_type'];
 $servings = $_POST['servings'];
-$description = $conn->real_escape_string(htmlspecialchars($_POST['description']));
-$steps = $conn->real_escape_string(htmlspecialchars($_POST['steps']));
+$description = $conn->real_escape_string(nl2br(htmlspecialchars($_POST['description'])));
+$steps = $conn->real_escape_string(nl2br(htmlspecialchars($_POST['steps'])));
 
 $ing = $_POST['ingredient'];
 $amt = $_POST['amt'];
@@ -27,7 +27,7 @@ $mes = $_POST['measure'];
 
 $image = $_POST['image'];
 if(!$image)
-	$image = 'NULL';
+	$image = 'http://images.meredith.com/recipecom/images/home/recipeBG2740x920.jpg.pagespeed.ce.xBgItY8Iod.jpg';
 $video = $_POST['video'];
 
 

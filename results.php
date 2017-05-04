@@ -28,21 +28,21 @@
             </div>
           </div>
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
 
-$keywords = $_POST['keyword'];
+$keywords = $_GET['keyword'];
 $limits = array();
-$type = $_POST['meal_type'];
-$time = $_POST['time'];
+$type = $_GET['meal_type'];
+$time = $_GET['time'];
 
-if(isset($_POST['vegan']))
+if(isset($_GET['vegan']))
 	$limits[] = 'vegan';
-if(isset($_POST['kosher']))
+if(isset($_GET['kosher']))
 	$limits[] = 'kosher';
-if(isset($_POST['dairy_free']))
+if(isset($_GET['dairy_free']))
 	$limits[] = 'dairy_free';
-if(isset($_POST['gluten_free']))
+if(isset($_GET['gluten_free']))
 	$limits[] = 'gluten_free';
 
 if(!strcmp($type,'any'))
@@ -95,8 +95,6 @@ else
 //echo $sql;
 if ($result = mysqli_query($conn, $sql)) {
         while ($row = mysqli_fetch_row($result)) {
-	if(!strcmp($row[3],'NULL'))
-		$row[3] = 'http://images.meredith.com/recipecom/images/home/recipeBG2740x920.jpg.pagespeed.ce.xBgItY8Iod.jpg';
         echo '<!-- GENERATE THIS CARD FOR EACH RESULT -->
         <div class="col-sm-6">
           <div class="card">
@@ -112,7 +110,7 @@ if ($result = mysqli_query($conn, $sql)) {
                 <li class="list-group-item" name="fat"><small class="text-muted"><label>Fat:</label> ' . $row[13] . 'g</small></li>
                 <li class="list-group-item" name="protein"><small class="text-muted"><label>Protein:</label> ' . $row[19] . 'g</small></li>
               </ul>
-              <a href="#" class="btn btn-primary">View Recipe</a>
+              <a href="recipe.php?R_ID=' . $row[0] . '" class="btn btn-primary">View Recipe</a>
             </div>
           </div>
         </div>';
